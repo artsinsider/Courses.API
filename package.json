@@ -1,0 +1,12 @@
+{
+  "name": "express.api.v1",
+  "version": "1.0.0",
+  "description": "my first api nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "D.E.I",
+  "license": "ISC"
+}
