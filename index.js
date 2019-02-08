@@ -3,6 +3,7 @@ const app = express();
 const fs = require('fs');
 const http = require('http');
 const modelsCourses = require('./models/courses.js');
+const router = express.Router();
 
 fs.appendFile('mynewfile.txt', 'Hello content!', function (err) {
     if (err) throw err;
@@ -15,6 +16,13 @@ function writeFile (data) {
         console.log('Saved!');
     })
 }
+
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 app.use(express.json());
 //================== GET REQUESTS ========================================a
@@ -39,7 +47,8 @@ app.get('/' , (req, res) => {
     res.send(hellow);
 });
 
-app.get(course, (req, res) => {
+app.get(course, (req, res, next) => {
+    console.log('/api/courses', req.body);
     res.send(htmlTqmlate)
 });
 
