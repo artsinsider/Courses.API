@@ -8,5 +8,8 @@
     "start": "node index.js"
   },
   "author": "D.E.I",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^2.3.0"
+  }
 }

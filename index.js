@@ -3,20 +3,36 @@ const app = express();
 const fs = require('fs');
 const http = require('http');
 const modelsCourses = require('./models/courses.js');
+const getDataUsers = require('./models/users');
+const faker = require('faker');
 const router = express.Router();
 
-fs.appendFile('mynewfile.txt', 'Hello content!', function (err) {
-    if (err) throw err;
-    console.log('Saved!');
-});
+// fs.appendFile('mynewfile.txt', 'Hello content!', function (err) {
+//     if (err) throw err;
+//     console.log('Saved!');
+// });
 
 function writeFile (data) {
     fs.writeFile('mynewfile.txt',data, (err) => {
         if (err) throw err;
         console.log('Saved!');
     })
+
+    return data;
 }
 
+async function comment (id) {
+    let users = await getDataUsers.getUsers(id);
+    let posts = await getDataUsers.getPosts(users.id);
+    let comment = await getDataUsers.getComments(posts[0].id);
+    return comment
+};
+
+function readFile() {
+    fs.readFile('mynewfile.txt','utf8', (err, data) => {
+        if (err) throw err;
+    });
+}
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:8080");
@@ -45,6 +61,18 @@ const course = '/api/courses';
 
 app.get('/' , (req, res) => {
     res.send(hellow);
+
+    // let data = {};
+    // for(let i =0; i <10; i ++) {
+    //     data[i]= {
+    //         id: faker.random.number(),
+    //         name: faker.name.firstName(),
+    //         phone: faker.phone.phoneNumber()
+    //     }
+    // }
+    //
+    // writeFile(JSON.stringify(data));
+
 });
 
 app.get(course, (req, res, next) => {
@@ -53,10 +81,8 @@ app.get(course, (req, res, next) => {
 });
 
 app.get(course + '/:courseId', (req, res) => {
-    if(!arr[req.params.courseId]) {
-       return res.status(404).send('This course with the given ID')
-    }
-   res.send(rep(req.params.courseId))
+    // http://localhost:3001/api/courses/1
+    comment(req.params.courseId).then(data => res.send(data))
 });
 
 app.get('/post/:year/:month', (req, res) => {
