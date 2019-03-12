@@ -12,26 +12,27 @@ const router = express.Router();
 //     console.log('Saved!');
 // });
 
-function writeFile (data) {
-    fs.writeFile('mynewfile.txt',data, (err) => {
-        if (err) throw err;
-        console.log('Saved!');
-    })
-
-    return data;
-}
-
-async function comment (id) {
-    let users = await getDataUsers.getUsers(id);
-    let posts = await getDataUsers.getPosts(users.id);
-    let comment = await getDataUsers.getComments(posts[0].id);
-    return comment
-};
-
 function readFile() {
     fs.readFile('mynewfile.txt','utf8', (err, data) => {
         if (err) throw err;
     });
+}
+function writeFile (data) {
+    fs.writeFile('mynewfile.txt',data, (err) => {
+        if (err) throw err;
+        console.log('Saved!');
+    });
+    return data;
+
+    // let data = {};
+    // for(let i =0; i <10; i ++) {
+    //     data[i]= {
+    //         id: faker.random.number(),
+    //         name: faker.name.firstName(),
+    //         phone: faker.phone.phoneNumber()
+    //     }
+    // }
+    // writeFile(JSON.stringify(data));
 }
 
 app.use(function(req, res, next) {
@@ -43,46 +44,23 @@ app.use(function(req, res, next) {
 app.use(express.json());
 //================== GET REQUESTS ========================================a
 
-const arr = ["<li><a href=\\\"#\\\">The Dawn of Aeronautics</a></li>",
-"<li><a href=\"#\">The Invention of the Balloon</a></li>",
-"<li><a href=\"#\">The First Balloon Ascent in England</a></li>",
-"<li><a href=\"#\">The Development of Balloon Philosophy</a></li>",
-"<li><a href=\"#\">Some Famous Early Voyagers</a></li>",
-"<li><a href=\"#\">Charles Green and the Nassau Balloon</a></li>",
-"<li><a href=\"#\">John Wise - The American Aeronaut</a></li>",
-"<li><a href=\"#\">The Balloon in the Service of Science</a></li>",
-"<li><a href=\\\"#\\\">Some Noteworthy Ascents</a></li>",
-"<li><a href=\\\"#\\\">The Highest Ascent on Record</a></li>"];
-
-const htmlTqmlate = "<div><h4>Chapter listing</h4><ul> *li </ul> </div>;";
-const hellow = "<div> <h1 style='text-align: center'>COURSES API NODE EXPRESS</h1>\n <button onclick=\"window.location.replace('/api/courses')\"> Get full course list</button></div>";
-const rep = (index) => htmlTqmlate.replace(/\*li/gi, '' + arr[index]);
-const course = '/api/courses';
 
 app.get('/' , (req, res) => {
-    res.send(hellow);
-
-    // let data = {};
-    // for(let i =0; i <10; i ++) {
-    //     data[i]= {
-    //         id: faker.random.number(),
-    //         name: faker.name.firstName(),
-    //         phone: faker.phone.phoneNumber()
-    //     }
-    // }
-    //
-    // writeFile(JSON.stringify(data));
-
+    res.send('hello');
 });
 
-app.get(course, (req, res, next) => {
+app.get('/api/courses', (req, res) => {
     console.log('/api/courses', req.body);
-    res.send(htmlTqmlate)
+    res.send('courses')
 });
 
-app.get(course + '/:courseId', (req, res) => {
+app.get('/api/courses' + '/:courseId', (req, res) => {
     // http://localhost:3001/api/courses/1
-    comment(req.params.courseId).then(data => res.send(data))
+    getDataUsers.comment(req.params.courseId)
+        .then(data => res.send(data))
+        .catch(() =>{
+            res.status(404).send({err: 'Комментарии не найдены'});
+        })
 });
 
 app.get('/post/:year/:month', (req, res) => {
