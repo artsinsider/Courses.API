@@ -7,36 +7,59 @@ const getDataUsers = require('./models/users');
 const faker = require('faker');
 const router = express.Router();
 
+const fetch = require('node-fetch');
+
 // fs.appendFile('mynewfile.txt', 'Hello content!', function (err) {
 //     if (err) throw err;
 //     console.log('Saved!');
 // });
 
 function readFile() {
+    let datas;
     fs.readFile('mynewfile.txt','utf8', (err, data) => {
         if (err) throw err;
+        return  JSON.parse(data)
     });
-}
-function writeFile (data) {
-    fs.writeFile('mynewfile.txt',data, (err) => {
-        if (err) throw err;
-        console.log('Saved!');
-    });
-    return data;
 
-    // let data = {};
-    // for(let i =0; i <10; i ++) {
-    //     data[i]= {
-    //         id: faker.random.number(),
-    //         name: faker.name.firstName(),
-    //         phone: faker.phone.phoneNumber()
-    //     }
-    // }
-    // writeFile(JSON.stringify(data));
+    return datas
 }
+// function writeFile (data) {
+//     fs.writeFile('mynewfile.txt',data, (err) => {
+//         if (err) throw err;
+//         console.log('Saved!');
+//     });
+//     return data;
+//
+//     // let data = {};
+//     // for(let i =0; i <10; i ++) {
+//     //     data[i]= {
+//     //         id: faker.random.number(),
+//     //         name: faker.name.firstName(),
+//     //         phone: faker.phone.phoneNumber()
+//     //     }
+//     // }
+//     // writeFile(JSON.stringify(data));
+// }
+
+// buildStructure = (arr) => {
+//     let structure = {}
+//     for(let i = 0; i < arr.length; i++) {
+//         const group = arr[i].group_id;
+//         if(!structure[group]) {
+//             structure[group] = [arr[i]]
+//         } else {
+//             structure[group] = [...structure[group],arr[i]]
+//         }
+//
+//
+//     }
+//
+//     return structure;
+//
+// };
 
 app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
@@ -45,8 +68,19 @@ app.use(express.json());
 //================== GET REQUESTS ========================================a
 
 
+function product() {
+     fetch(`${this.url}/posts?userId=${userId}`).then( res => console.log(res.json()));
+}
+
 app.get('/' , (req, res) => {
     res.send('hello');
+});
+
+app.get('/api/products' , (req, res) => {
+    fs.readFile('mynewfile.txt','utf8', (err, data) => {
+        if (err) throw err;
+        res.send(JSON.parse(data) )
+    });
 });
 
 app.get('/api/courses', (req, res) => {

@@ -1,1 +1,213 @@
-{"0":{"id":16930,"name":"Domingo","phone":"1-717-017-9743"},"1":{"id":32108,"name":"Sean","phone":"871.565.1857 x24841"},"2":{"id":91509,"name":"Marjolaine","phone":"(019) 502-3678 x6844"},"3":{"id":87019,"name":"Nathanial","phone":"(710) 075-8189 x88851"},"4":{"id":31394,"name":"Fermin","phone":"(186) 439-2990"},"5":{"id":73581,"name":"Julianne","phone":"526-849-9990 x13711"},"6":{"id":87865,"name":"Isai","phone":"(342) 468-2270"},"7":{"id":53365,"name":"Percy","phone":"592-706-6819 x45504"},"8":{"id":57487,"name":"Bridie","phone":"1-039-233-6994 x36414"},"9":{"id":89942,"name":"Dell","phone":"458-217-2297"}}
+{
+    "jsonrpc": "2.0",
+    "id": 25,
+    "result": [
+        {
+            "id": "4",
+            "name": "Единая новостная лента",
+            "count": "573698",
+            "type": "general",
+            "access_type": "full",
+            "group_name": "ТАСС",
+            "group_id": "1"
+        },
+        {
+            "id": "5",
+            "name": "Единая новостная лента ПЛЮС",
+            "count": "580995",
+            "type": "general",
+            "access_type": "full",
+            "group_name": "ТАСС",
+            "group_id": "1"
+        },
+        {
+            "id": "38",
+            "name": "Главные новости дня (старые) ТЕСТ",
+            "count": "4533",
+            "type": "test",
+            "access_type": "full",
+            "group_name": "ТАСС",
+            "group_id": "1"
+        },
+        {
+            "id": "108",
+            "name": "Главные новости дня",
+            "count": "29943",
+            "type": "general",
+            "access_type": "full",
+            "group_name": "ТАСС",
+            "group_id": "1"
+        },
+        {
+            "id": "6",
+            "name": "Российские новости",
+            "count": "490079",
+            "type": "general",
+            "access_type": "full",
+            "group_name": "ТАСС",
+            "group_id": "1"
+        },
+        {
+            "id": "7",
+            "name": "Мировые новости",
+            "count": "341445",
+            "type": "general",
+            "access_type": "full",
+            "group_name": "ТАСС",
+            "group_id": "1"
+        },
+        {
+            "id": "42",
+            "name": "Анонс ежедневный",
+            "count": "1778",
+            "type": "general",
+            "access_type": "full",
+            "group_name": "ТАСС",
+            "group_id": "1"
+        },
+        {
+            "id": "49",
+            "name": "Анонс еженедельный",
+            "count": "876",
+            "type": "general",
+            "access_type": "full",
+            "group_name": "ТАСС",
+            "group_id": "1"
+        },
+        {
+            "id": "46",
+            "name": "Анонсы Северо-Запад",
+            "count": "1258",
+            "type": "general",
+            "access_type": "full",
+            "group_name": "ТАСС",
+            "group_id": "1"
+        },
+        {
+            "id": "47",
+            "name": "Досье",
+            "count": "7297",
+            "type": "general",
+            "access_type": "full",
+            "group_name": "ТАСС",
+            "group_id": "1"
+        },
+        {
+            "id": "3",
+            "name": "Вести с пяти континентов",
+            "count": "53786",
+            "type": "general",
+            "access_type": "full",
+            "group_name": "Интерфакс",
+            "group_id": "2"
+        },
+        {
+            "id": "28",
+            "name": "Новости: Властные структуры России",
+            "count": "79838",
+            "type": "general",
+            "access_type": "full",
+            "group_name": "Интерфакс",
+            "group_id": "2"
+        },
+        {
+            "id": "2",
+            "name": "Новости: Внешняя политика",
+            "count": "57035",
+            "type": "general",
+            "access_type": "full",
+            "group_name": "Интерфакс",
+            "group_id": "2"
+        },
+        {
+            "id": "496",
+            "name": "Лента Наука",
+            "count": "0",
+            "type": "general",
+            "access_type": "full",
+            "group_name": "Интерфакс",
+            "group_id": "2"
+        },
+        {
+            "id": "41",
+            "name": "Новости культуры",
+            "count": "22929",
+            "type": "general",
+            "access_type": "full",
+            "group_name": "Интерфакс",
+            "group_id": "2"
+        },
+        {
+            "id": "25",
+            "name": "Новости: Религия и общество",
+            "count": "6066",
+            "type": "general",
+            "access_type": "full",
+            "group_name": "Интерфакс",
+            "group_id": "2"
+        },
+        {
+            "id": "23",
+            "name": "Новости: Криминал и ЧП",
+            "count": "137309",
+            "type": "general",
+            "access_type": "full",
+            "group_name": "Интерфакс",
+            "group_id": "2"
+        },
+        {
+            "id": "44",
+            "name": "Обзоры мировой прессы",
+            "count": "6620",
+            "type": "general",
+            "access_type": "full",
+            "group_name": "Интерфакс",
+            "group_id": "2"
+        },
+        {
+            "id": "130",
+            "name": "Армии и спецслужбы",
+            "count": "129",
+            "type": "general",
+            "access_type": "full",
+            "group_name": "Интерфакс",
+            "group_id": "2"
+        },
+        {
+            "id": "133",
+            "name": "Культура",
+            "count": "417",
+            "type": "general",
+            "access_type": "full",
+            "group_name": "Интерфакс",
+            "group_id": "2"
+        },
+        {
+            "id": "26",
+            "name": "Религия",
+            "count": "6066",
+            "type": "general",
+            "access_type": "full",
+            "group_name": "РИА Новости",
+            "group_id": "3"
+        },
+        {
+            "id": "251",
+            "name": "Общество",
+            "count": "453",
+            "type": "general",
+            "access_type": "full",
+            "group_name": "AFP",
+            "group_id": "4"
+        },
+        {
+            "id": "136",
+            "name": "Наука",
+            "count": "126",
+            "type": "general",
+            "access_type": "full",
+            "group_name": "PDA",
+            "group_id": "5"
+        }
+    ]
+}
