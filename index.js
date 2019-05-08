@@ -4,6 +4,7 @@ const fs = require('fs');
 const http = require('http');
 const modelsCourses = require('./models/courses.js');
 const getDataUsers = require('./models/users');
+const getDataRestorants = require('./models/scraps');
 const faker = require('faker');
 const router = express.Router();
 
@@ -23,23 +24,23 @@ function readFile() {
 
     return datas
 }
-// function writeFile (data) {
-//     fs.writeFile('mynewfile.txt',data, (err) => {
-//         if (err) throw err;
-//         console.log('Saved!');
-//     });
-//     return data;
-//
-//     // let data = {};
-//     // for(let i =0; i <10; i ++) {
-//     //     data[i]= {
-//     //         id: faker.random.number(),
-//     //         name: faker.name.firstName(),
-//     //         phone: faker.phone.phoneNumber()
-//     //     }
-//     // }
-//     // writeFile(JSON.stringify(data));
-// }
+function writeFile (data) {
+    fs.writeFile('mynewfile.txt',data, (err) => {
+        if (err) throw err;
+        console.log('Saved!');
+    });
+    return data;
+
+    let data = {};
+    for(let i =0; i <10; i ++) {
+        data[i]= {
+            id: faker.random.number(),
+            name: faker.name.firstName(),
+            phone: faker.phone.phoneNumber()
+        }
+    }
+    writeFile(JSON.stringify(data));
+}
 
 // buildStructure = (arr) => {
 //     let structure = {}
@@ -53,9 +54,7 @@ function readFile() {
 //
 //
 //     }
-//
 //     return structure;
-//
 // };
 
 app.use(function(req, res, next) {
@@ -67,13 +66,53 @@ app.use(function(req, res, next) {
 app.use(express.json());
 //================== GET REQUESTS ========================================a
 
+function scraps(datas) {
+    let res ;
+
+
+    getDataRestorants.comment(datas)
+        .then(data => {
+            if(data === 'DONE') {
+                return data
+            } else {
+                scraps(data) ;
+                console.log('-----------------', data)
+                return res
+            }
+            // scraps(res)
+            // return res = data
+    } )
+    .catch(() =>{
+        console.log({err: 'Комментарии не найдены'});
+    })
+
+    // console.log('datas===================', datas, res)
+    // if(res !== datas) {
+    //     scraps(res)
+    // }
+
+
+};
+
 
 function product() {
      fetch(`${this.url}/posts?userId=${userId}`).then( res => console.log(res.json()));
 }
 
 app.get('/' , (req, res) => {
-    res.send('hello');
+    // scraps(199)
+
+    res.send('OK')
+    // getDataRestorants.comment(444)
+    //     .then(data => {
+    //         console.log(data)
+    //
+    //
+    //     } )
+    //     .catch(() =>{
+    //         res.status(404).send({err: 'Комментарии не найдены'});
+    //     })
+
 });
 
 app.get('/api/products' , (req, res) => {
@@ -103,7 +142,7 @@ app.get('/post/:year/:month', (req, res) => {
 });
 
 //PORT
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3002;
 app.listen(port, () => console.log(`Listen on port ${port}...`));
 
 //================== GET REQUESTS ========================================
