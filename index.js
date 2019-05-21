@@ -6,6 +6,7 @@ const modelsCourses = require('./models/courses.js');
 const getDataUsers = require('./models/users');
 const getDataRestorants = require('./models/scraps');
 const faker = require('faker');
+const path = require('path');
 const router = express.Router();
 
 const fetch = require('node-fetch');
@@ -67,51 +68,118 @@ app.use(express.json());
 //================== GET REQUESTS ========================================a
 
 function scraps(datas) {
-    let res ;
-
-
     getDataRestorants.comment(datas)
         .then(data => {
             if(data === 'DONE') {
                 return data
             } else {
-                scraps(data) ;
-                console.log('-----------------', data)
-                return res
+                scraps(data);
+                return data
             }
-            // scraps(res)
-            // return res = data
     } )
     .catch(() =>{
         console.log({err: 'Комментарии не найдены'});
     })
-
-    // console.log('datas===================', datas, res)
-    // if(res !== datas) {
-    //     scraps(res)
-    // }
-
-
 };
 
+function rebuildFile() {
+    fs.readdir('./records/menu', function(err, list) {
+        list.forEach(name => {
+            const n = name.split('.')[0];
+            // fs.mkdir(`./records/menu/${n[0]}`,{}, (err, er) => {
+                fs.readFile(`./records/menu/${n}.json`,'utf8', (err, data) => {
+                    if (err) throw err;
 
-function product() {
-     fetch(`${this.url}/posts?userId=${userId}`).then( res => console.log(res.json()));
+                    const datas = JSON.parse(data);
+                    if(datas[0].payload ) {
+                        fs.writeFileSync(`./records/menu/${n}/desc_${n}.json`, JSON.stringify(datas[0].payload.foundPlace),'utf8' ,
+                            (err) =>{
+                                if(err) console.log(err)
+                            });
+
+                        fs.writeFileSync(`./records/menu/${n}/menu_${n}.json`, JSON.stringify(datas[2].payload.categories),'utf8' ,
+                            (err) =>{
+                                if(err) console.log(err)
+                            });
+                    }
+                });
+            // });
+        })
+    })
 }
 
 app.get('/' , (req, res) => {
-    // scraps(199)
-
+    // scraps(0)
     res.send('OK')
-    // getDataRestorants.comment(444)
-    //     .then(data => {
-    //         console.log(data)
-    //
-    //
-    //     } )
-    //     .catch(() =>{
-    //         res.status(404).send({err: 'Комментарии не найдены'});
-    //     })
+});
+
+app.get('/api/restaurant?:limit' , (req, res) => {
+
+    console.log(req.params , req.query);
+    fs.readFile(`./records/restaurant/restaurant.json`,'utf8', (err, data) => {
+        if (err) res.send(err);
+
+        // const parts = slug.slice(lim, lim ? lim + 20 : 20)
+        // console.log('=',lim, lim ? lim + 20 : 20)
+        // return parts
+        res.send(data)
+    });
+});
+
+app.get('/api/feed' , (req, res) => {
+    fs.readFile(`./records/restaurant/feeds.json`,'utf8', (err, data) => {
+        if (err) res.send(err);
+        res.send(data)
+    });
+});
+
+app.get('/api/description/:name' , (req, res) => {
+    fs.readFile(`./records/menu/${req.params.name}/desc_${req.params.name}.json`,'utf8', (err, data) => {
+        if (err) res.send(err);
+        res.send(data)
+    });
+});
+
+app.get('/api/restaurantMenu/:menu' , (req, res) => {
+    fs.readFile(`./records/menu/${req.params.menu}/menu_${req.params.menu}.json`,'utf8', (err, data) => {
+        if (err) res.send(err);
+        res.send(data)
+    });
+});
+
+
+// Устарел
+app.get('/api/:name' , (req, res) => {
+    const exist = fs.existsSync(`./records/menu/${req.params.name}.json`);
+    if(exist) {
+        fs.readFile(`./records/menu/${req.params.name}.json`, 'utf8', (err,data)  => res.send(data));
+        return;
+    } else {
+
+        const reg = /-|_/gmi;
+        fs.readdir('./records/menu', function(err, list) {
+
+            list.forEach(name => {
+                const nameReq = req.params.name.toLowerCase().split(reg);
+                const nameList = name.toLowerCase().split(reg);
+                const find = nameReq.indexOf(nameList[0].toLowerCase());
+                const find1 = nameList.indexOf(nameReq[0].toLowerCase());
+                find !== -1 ?console.log('find', find): null;
+                find1 !== -1 ?console.log('find1', find1) : null;
+                if(find > -1) {
+                    console.log(req.params.name, name)
+                    fs.rename( `./records/menu/${name}`, `./records/menu/${req.params.name}.json`, function(err) {
+                        if ( err ) console.log('ERROR: ' + err);
+                        console.log("RENAME DONE -" + req.params.name);
+                        fs.readFile(`./records/menu/${req.params.name}.json`, 'utf8', (err,data)  => {
+                            res.send(data)
+                        });
+                    });
+                }
+            })
+        });
+        res.send('')
+    }
 
 });
 
@@ -123,12 +191,10 @@ app.get('/api/products' , (req, res) => {
 });
 
 app.get('/api/courses', (req, res) => {
-    console.log('/api/courses', req.body);
     res.send('courses')
 });
 
 app.get('/api/courses' + '/:courseId', (req, res) => {
-    // http://localhost:3001/api/courses/1
     getDataUsers.comment(req.params.courseId)
         .then(data => res.send(data))
         .catch(() =>{

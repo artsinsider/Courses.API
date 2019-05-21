@@ -226,20 +226,16 @@ class getDataRestorants  {
     }
 
     async comment(index) {
-        console.log('index -' + index)
         let description = await this.getRestaurantDescription(slug[index]);
         let menu = await this.getRestaurantMenu(slug[index]);
+        const ras = '---------------------------------------------------------------'
 
-
-        fs.writeFile(`./records/${slug[index]}.json`, JSON.stringify({description, menu}) ,
+        fs.writeFileSync(`./records/${slug[index]}.json`, JSON.stringify([description,ras ,menu]),'utf8' ,
             (err) =>{
                 if(err) {
                     console.log(err)
                     return
                 }
-
-                console.log('OK -' + this.count)
-
             });
         this.count = this.count + 1
 
@@ -248,13 +244,7 @@ class getDataRestorants  {
         } else {
             return index + 1
         }
-
     };
 }
 
 module.exports = new getDataRestorants("https://eda.yandex/api/v2/catalog");
-
-
-//https://eda.yandex/api/v2/catalog/Teremok_Nikolskaya/menu?regionId=1
-
-//https://eda.yandex/api/v2/catalog/Teremok_Nikolskaya?regionId=1
